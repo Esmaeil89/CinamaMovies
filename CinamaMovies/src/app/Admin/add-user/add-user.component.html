@@ -1,0 +1,82 @@
+<div class="container mt-4 mb-4">
+  <h5>{{title}}</h5>
+  <hr class="mb-4" />
+  <div class="addUser-container">
+      <div class="alert alert-success alert-dismissible fade show" role="alert"
+          *ngIf="message != null && message != ''">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              <span class="sr-only">Close</span>
+          </button>
+          {{message}}
+      </div>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert"
+          *ngIf="errorMsg != null && errorMsg != ''">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              <span class="sr-only">Close</span>
+          </button>
+          {{errorMsg}}
+      </div>
+      <div class="col-md-5">
+          <form [formGroup]="userForm" (ngSubmit)="AddUser()">
+              <div class="form-group">
+                  <label for="userName">اسم المستخدم</label>
+                  <input type="text" formControlName="userName" class="form-control" id="userName"
+                      placeholder="User Name" [ngClass]="{'is-invalid' : this.userForm.get('userName').invalid && this.userForm.get('userName').touched}" (blur)="isUserNameExist()"/>
+                      <div class="text-danger" *ngIf="this.userForm.get('userName').invalid && this.userForm.get('userName').touched">{{validateMessages.userName.required}}</div>
+                      <div class="text-danger" *ngIf="this.userForm.get('userName').valid">{{validateMessages.userName.exist}}</div>
+              </div>
+              <div class="form-group">
+                  <label for="email">البريد الالكتروني</label>
+                  <input type="email" formControlName="email" class="form-control" id="email" placeholder="Email Address"
+                      [ngClass]="{'is-invalid' : this.userForm.get('email').invalid && this.userForm.get('email').touched}" (blur)="isEmailExist()" />
+                      <div class="text-danger" *ngIf="this.userForm.get('email').invalid && this.userForm.get('email').touched">
+                        <div *ngIf="this.userForm.get('email').errors.required"> {{validateMessages.email.required}} </div>
+                        <div *ngIf="this.userForm.get('email').errors.email"> {{validateMessages.email.notValid}} </div>
+                      </div>
+                      <div class="text-danger" *ngIf="this.userForm.get('email').valid">{{validateMessages.email.exist}}</div>
+              </div>
+              <div class="form-group">
+                  <label for="password">كلمة المرور</label>
+                  <input type="password" formControlName="password" class="form-control" id="password" placeholder="Password" required minlength="6"
+                  [ngClass]="{'is-invalid' : this.userForm.get('password').invalid && this.userForm.get('password').touched}" />
+                  <div class="text-danger" *ngIf="this.userForm.get('password').invalid && this.userForm.get('password').touched">
+                    <div *ngIf="this.userForm.get('password').errors.required">{{validateMessages.password.required}}</div>
+                    <div *ngIf="this.userForm.get('password').errors.minlength">{{validateMessages.password.minLenth}}</div>
+                  </div>
+                  <div class="text-danger" *ngIf="isPasswordNotValid()">{{validateMessages.password.notMatch}}</div>
+                </div>
+              <div class="form-group">
+                  <label for="passwordConfirm">تأكيد كلمة المرور</label>
+                  <input type="password" formControlName="passwordConfirm" class="form-control" id="passwordConfirm" placeholder="Password confirm" required minlength="6"
+                  [ngClass]="{'is-invalid' : this.userForm.get('passwordConfirm').invalid && this.userForm.get('passwordConfirm').touched}" />
+                  <div class="text-danger" *ngIf="this.userForm.get('passwordConfirm').invalid && this.userForm.get('passwordConfirm').touched">
+                    <div *ngIf="this.userForm.get('passwordConfirm').errors.required">{{validateMessages.passwordConfirm.required}}</div>
+                    <div *ngIf="this.userForm.get('passwordConfirm').errors.minlength">{{validateMessages.passwordConfirm.minLenth}}</div>
+                  </div>
+                  <div class="text-danger" *ngIf="isPasswordNotMatch()">{{validateMessages.passwordConfirm.isMatch}}</div>
+                </div>
+              <div class="form-group">
+                  <label for="phone">رقم الهاتف</label>
+                  <input type="text" formControlName="phone" class="form-control" id="phone"
+                      placeholder="Phone Number">
+              </div>
+              <div class="form-group">
+                  <label for="country">البلد</label>
+                  <input type="text" formControlName="country" class="form-control" id="country"
+                      placeholder="Country">
+              </div>
+              <div class="form-check mb-3">
+                  <label class="form-check-label">
+                      <input type="checkbox" formControlName="emailConfirmed" class="form-check-input ml-2"
+                          name="emailConfirmed" id="emailConfirmed" value="checkedValue">
+                      <label class="mr-3">تفعيل البريد الالكتروني</label>
+                  </label>
+              </div>
+              <button type="submit" class="btn btn-primary"
+                  [disabled]="userForm.invalid || isPasswordNotMatch() || isUserNameExist() || isEmailExist()">{{btnTitle}}</button>
+          </form>
+      </div>
+  </div>
+</div>

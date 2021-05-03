@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark ar">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="">{{title}}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link" routerLink="controlpanel" *ngIf="isAdmin()">
+            <i class="fa fa-user-shield"></i> لوحة التحكم
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-user-circle ml-2"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <div *ngIf="!isUserRegisterd()">
+              <div><a class="dropdown-item" routerLink="register">التسجيل</a></div>
+              <div class="dropdown-divider"></div>
+              <div><a class="dropdown-item" routerLink="login">تسجيل دخول</a></div>
+            </div>
+            <div *ngIf="isUserRegisterd()">
+              <div><a class="dropdown-item" (click)="logout()">تسجيل خروج</a></div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

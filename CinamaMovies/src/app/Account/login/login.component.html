@@ -1,0 +1,50 @@
+<div class="container mt-4 mb-4">
+  <h5>تسجيل الدخول</h5>
+  <hr class="mb-4" />
+  <div class="login-container">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="message !== ''">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+      </button>
+      {{message}}
+    </div>
+    <div class="col-md-5">
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="form-group">
+          <label for="exampleInputEmail1" class="form-label" >البريد الالكتروني</label >
+          <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1" placeholder="البريد الالكتروني"
+          [ngClass]="{'is-invalid' : this.loginForm.get('email').invalid && this.loginForm.get('email').touched}" />
+          <div class="text-danger" *ngIf="this.loginForm.get('email').invalid && this.loginForm.get('email').touched">
+            <div class="text-danger" *ngIf="this.loginForm.get('email').errors.required">
+              {{validateMessages.email.required}}
+            </div>
+            <div class="text-danger" *ngIf="this.loginForm.get('email').errors.email">
+              {{validateMessages.email.notValid}}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1" class="form-label" >كلمة المرور</label >
+          <input type="password" formControlName="password" class="form-control" id="exampleInputPassword1" placeholder="كلمة المرور"
+          [ngClass]="{'is-invalid' : this.loginForm.get('password').invalid && this.loginForm.get('password').touched}" />
+          <div class="text-danger" *ngIf="this.loginForm.get('password').invalid && this.loginForm.get('password').touched">
+            <div *ngIf="this.loginForm.get('password').errors.required">{{validateMessages.password.required}}</div>
+          </div>
+        </div>
+
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" formControlName="rememberMe" id="exampleCheck1" />
+          <label class="form-check-label mr-3" for="exampleCheck1">تذكرني</label>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="this.loginForm.invalid ">تسجيل دخول</button>
+      </form>
+    </div>
+  </div>
+  <div class="btn-login mt-3">
+    ليس لديك حساب <a routerLink="/register" class="">تسجيل مستخدم جديد</a>
+  </div>
+  <div class="btn-login mt-3">
+    نسيت كلمة المرور؟ <a routerLink="/forgetpassword" class="">اضغط هنا للإستعادتها</a>
+  </div>
+</div>
